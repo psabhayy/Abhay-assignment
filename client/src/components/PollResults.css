@@ -1,0 +1,113 @@
+.poll-results-screen {
+  min-height: 100vh;
+  padding: 40px 24px;
+  background-color: var(--background-light);
+}
+
+.poll-results-container {
+  max-width: 900px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease;
+}
+
+.history-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary-purple);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-md);
+}
+
+.history-btn:hover {
+  background: var(--primary-purple-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.results-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 24px;
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.result-item {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.result-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.result-percentage {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary-purple);
+}
+
+.result-bar-container {
+  height: 8px;
+  background: var(--background-gray);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.result-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-purple) 0%, var(--primary-purple-light) 100%);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.waiting-message {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-dark);
+  margin-top: 60px;
+}
+
+.ask-next-btn {
+  width: 100%;
+  max-width: 400px;
+  margin: 60px auto 0;
+  display: block;
+  background: var(--primary-purple);
+  color: white;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.ask-next-btn:hover {
+  background: var(--primary-purple-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
