@@ -1,0 +1,42 @@
+.name-entry {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: var(--background-light);
+}
+
+.name-entry-container {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.name-input-group {
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.name-input-group label {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+
+.name-input-group input {
+  width: 100%;
+  padding: 16px 20px;
+  font-size: 16px;
+  border: 1px solid var(--border-gray);
+  border-radius: 8px;
+  background: var(--background-gray);
+  color: var(--text-dark);
+}
+
+.name-input-group input::placeholder {
+  color: var(--text-light);
+}
