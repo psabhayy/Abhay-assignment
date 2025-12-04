@@ -1,0 +1,27 @@
+.kicked-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: var(--background-light);
+}
+
+.kicked-container {
+  max-width: 600px;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.kicked-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 32px 0 24px;
+}
+
+.kicked-message {
+  font-size: 16px;
+  color: var(--text-gray);
+  line-height: 1.6;
+}
