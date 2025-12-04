@@ -1,0 +1,135 @@
+.poll-question-screen {
+  min-height: 100vh;
+  padding: 40px 24px;
+  background-color: var(--background-light);
+}
+
+.poll-question-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.question-number {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.timer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--error-red);
+}
+
+.timer-critical {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.question-box {
+  background: #3A3A3A;
+  color: white;
+  padding: 24px 32px;
+  border-radius: 8px;
+  margin-bottom: 32px;
+}
+
+.question-text {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: white;
+  border: 2px solid var(--border-gray);
+  border-radius: 12px;
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option-item:hover:not(.option-disabled) {
+  border-color: var(--primary-purple-light);
+  transform: translateX(4px);
+}
+
+.option-selected {
+  border-color: var(--primary-purple);
+  background: rgba(108, 99, 255, 0.05);
+}
+
+.option-disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.option-number {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-purple);
+  color: white;
+  border-radius: 50%;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.option-selected .option-number {
+  background: var(--primary-purple-dark);
+}
+
+.option-label {
+  font-size: 16px;
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+.submit-btn {
+  background: var(--primary-purple);
+  color: white;
+  padding: 16px 48px;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: 600;
+  display: block;
+  margin: 0 auto;
+  box-shadow: var(--shadow-md);
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: var(--primary-purple-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.submit-btn:disabled {
+  background: var(--text-light);
+}
