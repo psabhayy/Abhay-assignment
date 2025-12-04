@@ -1,0 +1,121 @@
+.poll-history-screen {
+  min-height: 100vh;
+  padding: 40px 24px;
+  background-color: var(--background-light);
+}
+
+.poll-history-container {
+  max-width: 900px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.history-header h2 {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.close-btn,
+.back-btn {
+  background: white;
+  border: 1px solid var(--border-light);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover,
+.back-btn:hover {
+  background: var(--background-light);
+  transform: translateY(-1px);
+}
+
+.no-history {
+  text-align: center;
+  font-size: 18px;
+  color: var(--text-light);
+  padding: 60px 20px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.history-item {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.history-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.history-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.history-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-purple);
+}
+
+.history-date {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.history-question {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.history-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.poll-stats {
+  margin-top: 32px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.poll-stats p {
+  font-size: 14px;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.poll-stats p:last-child {
+  margin-bottom: 0;
+}
