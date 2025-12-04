@@ -228,28 +228,62 @@
   background: var(--text-light);
 }
 
-.participants-toggle {
+.participants-section {
   margin-top: 40px;
+}
+
+.participants-toggle {
   padding: 16px 20px;
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  font-weight: 600;
   color: var(--text-dark);
   box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
 }
 
 .participants-toggle:hover {
   background: var(--background-gray);
+  border-color: var(--primary-purple);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.participants-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.participants-header svg {
+  color: var(--primary-purple);
+}
+
+.student-count {
+  background: var(--primary-purple);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 24px;
+  text-align: center;
+}
+
+.toggle-arrow {
+  transition: transform 0.3s ease;
 }
 
 .participants-list {
   margin-top: 16px;
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 20px;
   box-shadow: var(--shadow-sm);
   animation: slideDown 0.3s ease;
@@ -266,6 +300,21 @@
   }
 }
 
+.no-students {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-secondary);
+}
+
+.no-students svg {
+  margin-bottom: 16px;
+}
+
+.no-students p {
+  font-size: 14px;
+  font-weight: 500;
+}
+
 .participants-list table {
   width: 100%;
   border-collapse: collapse;
@@ -273,25 +322,206 @@
 
 .participants-list th {
   text-align: left;
-  padding: 12px;
+  padding: 12px 16px;
   border-bottom: 2px solid var(--border-gray);
   font-weight: 600;
   color: var(--text-dark);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .participants-list td {
-  padding: 12px;
+  padding: 16px;
   border-bottom: 1px solid var(--border-gray);
+  vertical-align: middle;
+}
+
+.participants-list tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.participants-list tbody tr {
+  transition: background 0.2s ease;
+}
+
+.participants-list tbody tr:hover {
+  background: var(--background-gray);
+}
+
+.student-number {
+  color: var(--text-secondary);
+  font-weight: 600;
+  width: 40px;
+}
+
+.student-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+}
+
+.student-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-purple), var(--primary-purple-dark));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-active {
+  background: #D1FAE5;
+  color: #065F46;
 }
 
 .kick-btn {
-  color: var(--primary-purple);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #FEE2E2;
+  color: #DC2626;
   font-size: 14px;
   font-weight: 600;
-  background: transparent;
-  text-decoration: underline;
+  border-radius: 8px;
+  border: 1px solid #FCA5A5;
+  transition: all 0.2s ease;
 }
 
 .kick-btn:hover {
-  color: var(--primary-purple-dark);
+  background: #DC2626;
+  color: white;
+  border-color: #DC2626;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.kick-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Confirmation Modal */
+.confirm-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.confirm-modal {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  animation: scaleIn 0.3s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.confirm-icon {
+  margin-bottom: 20px;
+}
+
+.confirm-modal h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+
+.confirm-modal p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.confirm-modal p strong {
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.confirm-warning {
+  font-size: 13px;
+  color: #DC2626;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.cancel-btn,
+.confirm-btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.cancel-btn {
+  background: var(--background-gray);
+  color: var(--text-dark);
+  border: 1px solid var(--border-gray);
+}
+
+.cancel-btn:hover {
+  background: var(--border-gray);
+}
+
+.confirm-btn {
+  background: #DC2626;
+  color: white;
+  border: 1px solid #DC2626;
+}
+
+.confirm-btn:hover {
+  background: #B91C1C;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }

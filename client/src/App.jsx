@@ -28,6 +28,7 @@ function App() {
   const results = useSelector((state) => state.poll.results);
   const pollHistory = useSelector((state) => state.poll.pollHistory);
   const isChatOpen = useSelector((state) => state.chat.isOpen);
+  const selectedAnswer = useSelector((state) => state.poll.selectedAnswer);
 
   const {
     joinAsTeacher,
@@ -104,9 +105,7 @@ function App() {
   };
 
   const handleKickStudent = (kickStudentId) => {
-    if (confirm('Are you sure you want to remove this student?')) {
-      kickStudent(kickStudentId);
-    }
+    kickStudent(kickStudentId);
   };
 
   const handleSendMessage = (authorId, authorRole, content) => {
@@ -182,7 +181,11 @@ function App() {
     return (
       <>
         {results ? (
-          <PollResults results={results} showHistory={false} />
+          <PollResults 
+            results={results} 
+            showHistory={false} 
+            studentAnswer={selectedAnswer}
+          />
         ) : currentQuestion ? (
           <PollQuestion
             question={currentQuestion}

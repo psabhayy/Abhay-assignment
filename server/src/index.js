@@ -55,17 +55,40 @@ const publicQuestion = (question) => {
   };
 };
 
-const computeResults = (question) => {
+const computeResults = (question, includeStudentDetails = false) => {
   if (!question) return null;
   const totalResponses = Object.keys(question.answers).length;
   const counts = question.options.map(() => 0);
-  Object.values(question.answers).forEach((index) => {
-    if (typeof index === 'number' && counts[index] !== undefined) {
-      counts[index] += 1;
+  
+  // Build student answer details
+  const studentAnswers = [];
+  Object.entries(question.answers).forEach(([studentId, answerIndex]) => {
+    if (typeof answerIndex === 'number' && counts[answerIndex] !== undefined) {
+      counts[answerIndex] += 1;
+    }
+    
+    if (includeStudentDetails) {
+      const student = students.get(studentId);
+      if (student) {
+        const selectedOption = question.options[answerIndex];
+        const correctOption = question.options.find(opt => opt.isCorrect);
+        studentAnswers.push({
+          studentId,
+          studentName: student.name,
+          selectedOptionId: selectedOption?.id,
+          selectedOptionLabel: selectedOption?.label,
+          selectedOptionIndex: answerIndex,
+          isCorrect: selectedOption?.isCorrect || false,
+          correctOptionId: correctOption?.id,
+          correctOptionLabel: correctOption?.label
+        });
+      }
     }
   });
+  
   const percentages = counts.map((count) => (totalResponses ? Math.round((count / totalResponses) * 100) : 0));
-  return {
+  
+  const results = {
     id: question.id,
     text: question.text,
     createdAt: question.createdAt,
@@ -80,6 +103,12 @@ const computeResults = (question) => {
       percentage: percentages[idx]
     }))
   };
+  
+  if (includeStudentDetails) {
+    results.studentAnswers = studentAnswers;
+  }
+  
+  return results;
 };
 
 const emitToTeacher = (event, payload) => {
@@ -98,20 +127,31 @@ const broadcastTeacherState = () => {
   });
 };
 
+const broadcastStudentList = () => {
+  const studentList = summarizeStudents();
+  io.to('students').emit('students:update', studentList);
+  broadcastTeacherState();
+};
+
 const closeCurrentQuestion = (reason = 'completed') => {
   if (!currentQuestion || currentQuestion.closedAt) return;
   clearTimeout(currentQuestion.timer);
   currentQuestion.closedAt = Date.now();
   currentQuestion.closedReason = reason;
 
-  const results = computeResults(currentQuestion);
-  pollHistory.unshift(results);
+  // Student results (without student details)
+  const studentResults = computeResults(currentQuestion, false);
+  
+  // Teacher results (with student details)
+  const teacherResults = computeResults(currentQuestion, true);
+  
+  pollHistory.unshift(teacherResults);
   if (pollHistory.length > MAX_HISTORY) {
     pollHistory.pop();
   }
 
-  io.to('students').emit('poll:results', results);
-  io.to('teachers').emit('poll:results', results);
+  io.to('students').emit('poll:results', studentResults);
+  io.to('teachers').emit('poll:results', teacherResults);
   currentQuestion = null;
   broadcastTeacherState();
 };
@@ -175,7 +215,7 @@ io.on('connection', (socket) => {
     if (student.socketId) {
       io.to(student.socketId).emit('student:kicked');
     }
-    broadcastTeacherState();
+    broadcastStudentList();
   });
 
   socket.on('teacher:request-history', () => {
@@ -215,7 +255,7 @@ io.on('connection', (socket) => {
       chatHistory
     });
 
-    broadcastTeacherState();
+    broadcastStudentList();
   });
 
   socket.on('student:answer', ({ studentId, optionId } = {}, cb) => {

@@ -13,6 +13,10 @@ const ChatPopup = ({ isOpen, onToggle, onSendMessage }) => {
   const userId = useSelector((state) => state.user.studentId);
   const students = useSelector((state) => state.poll.students);
 
+  // Calculate active participants count
+  const activeParticipants = students.filter(s => !s.kicked && !!s.socketId);
+  const participantCount = activeParticipants.length + (userRole === 'teacher' ? 1 : 0); // +1 for teacher
+
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -43,13 +47,23 @@ const ChatPopup = ({ isOpen, onToggle, onSendMessage }) => {
             className={`chat-tab ${activeTab === 'chat' ? 'chat-tab-active' : ''}`}
             onClick={() => setActiveTab('chat')}
           >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ marginRight: '6px' }}>
+              <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="currentColor"/>
+            </svg>
             Chat
+            {messages.length > 0 && (
+              <span className="chat-badge">{messages.length}</span>
+            )}
           </button>
           <button
             className={`chat-tab ${activeTab === 'participants' ? 'chat-tab-active' : ''}`}
             onClick={() => setActiveTab('participants')}
           >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ marginRight: '6px' }}>
+              <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+            </svg>
             Participants
+            <span className="chat-badge participant-badge">{participantCount}</span>
           </button>
         </div>
 
@@ -87,14 +101,33 @@ const ChatPopup = ({ isOpen, onToggle, onSendMessage }) => {
           </>
         ) : (
           <div className="participants-panel">
-            <div className="participants-header">
-              <span>Name</span>
+            <div className="participants-count-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+              </svg>
+              <span>{participantCount} Participant{participantCount !== 1 ? 's' : ''} Online</span>
             </div>
-            {students.filter(s => !s.kicked && !!s.socketId).map((student) => (
-              <div key={student.id} className="participant-item">
-                {student.name}
-              </div>
-            ))}
+            <div className="participants-list-container">
+              {userRole === 'teacher' && (
+                <div className="participant-item participant-teacher">
+                  <div className="participant-avatar teacher-avatar">T</div>
+                  <span className="participant-name">You (Teacher)</span>
+                  <span className="participant-role-badge">Host</span>
+                </div>
+              )}
+              {activeParticipants.map((student) => (
+                <div key={student.id} className="participant-item">
+                  <div className="participant-avatar">
+                    {student.name.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="participant-name">
+                    {student.name}
+                    {userRole === 'student' && student.id === userId && ' (You)'}
+                  </span>
+                  <span className="participant-status-dot"></span>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>

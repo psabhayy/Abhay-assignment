@@ -37,6 +37,10 @@ export const useSocket = () => {
       dispatch(setKicked());
     });
 
+    socket.on('students:update', (studentList) => {
+      dispatch(setStudents(studentList));
+    });
+
     if (role === 'teacher') {
       socket.on('teacher:state', (state) => {
         if (state.students) {
@@ -72,6 +76,7 @@ export const useSocket = () => {
       socket.off('poll:history');
       socket.off('chat:message');
       socket.off('student:kicked');
+      socket.off('students:update');
       socket.off('teacher:state');
       socket.off('teacher:welcome');
     };
